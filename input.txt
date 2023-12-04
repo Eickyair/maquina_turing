@@ -1,6 +1,9 @@
 EstadoInicial: 0
-EstadosFinales: 5
+NumEstadosFinales: 1
+EstadosFinales: 4
+NumElementoSigma: 3
 Sigma: 1 * B
+NumElementoGamma: 4
 Gamma: 0 1 * B
 NumEstados: 5
 idEstado: 0

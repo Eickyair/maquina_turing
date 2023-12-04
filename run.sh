@@ -16,9 +16,16 @@ gcc main.c -o main -std=c99 -Wall -Wextra -pedantic -g
 
 # Verifica si la compilación fue exitosa
 if [ $? -eq 0 ]; then
-  # Ejecuta el programa "main" con el archivo de entrada "input.txt" y redirige
-  # la salida al archivo "output.txt".
-  ./main < input.txt > output.txt
+  # Verifica si se recibió la bandera -t
+  if [ "$1" = "-t" ]; then
+    # Ejecuta el programa "main" con el archivo de entrada "test.txt" y redirige
+    # la salida al archivo "output.txt".
+    ./main < test.txt > output.txt
+  else
+    # Ejecuta el programa "main" con el archivo de entrada "input.txt" y redirige
+    # la salida al archivo "output.txt".
+    ./main < input.txt > output.txt
+  fi
 
   # Verifica si la ejecución del programa fue exitosa
   if [ $? -eq 0 ]; then

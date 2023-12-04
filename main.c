@@ -5,7 +5,7 @@
 char LECTURA_CADENA[MAX_CARACTERES_POR_LINEA];
 char *TOKEN = NULL;
 const char DELIMITADOR = ' ';
-#define leerCadena() fgets(LECTURA_CADENA, 100, stdin)
+#define leerCadena() fgets(LECTURA_CADENA, MAX_CARACTERES_POR_LINEA, stdin)
 #define leerTokens() strtok(LECTURA_CADENA, &DELIMITADOR)
 #define siguienteToken() strtok(NULL, &DELIMITADOR)
 
@@ -60,7 +60,6 @@ void imprimirAristaJSON(struct Arista *arista)
     for (int i = 0; i < arista->numeroOperacionesEscrituraCinta; i++)
     {
         imprimirOperacionEscrituraCintaJSON(&(arista->operacionesEscrituraCinta[i]));
-        
         if (i < arista->numeroOperacionesEscrituraCinta - 1)
         {
             printf(",\n");
@@ -82,16 +81,21 @@ void imprimirCinta(struct Cinta *cinta)
 void imprimirTokens()
 {
     TOKEN = leerTokens();
+    printf("%s", TOKEN);
     while (TOKEN != NULL)
     {
-        printf("%s ", TOKEN);
+        printf("%c",DELIMITADOR);
+        printf("%s", TOKEN);
         TOKEN = siguienteToken();
     }
-    printf("\n");
 }
 int main()
 {
-    leerCadena();
-    imprimirTokens();
+    const char *cadena = leerCadena();
+    while (cadena != NULL)
+    {
+        imprimirTokens();
+        cadena = leerCadena();
+    }
     return 0;
 }

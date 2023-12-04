@@ -1,5 +1,50 @@
-1 10 100 1000 10000
-1 10 100 1000 10000
-1 10 100 1000 10000
-1 10 100 1000 10000
-1 10 100 1000 10000
+EstadoInicial: 0
+EstadosFinales: 5
+Sigma: 1 * B
+Gamma: 0 1 * B
+NumEstados: 5
+idEstado: 0
+NumAristas: 2
+Arista
+1 1 1
+OperacionesEscrituraCinta
+1 0 R
+Arista
+* 4 1
+OperacionesEscrituraCinta
+1 * R
+idEstado: 1
+NumAristas: 2
+Arista
+1 1 1
+OperacionesEscrituraCinta
+1 1 R
+Arista
+* 2 1
+OperacionesEscrituraCinta
+1 * R
+idEstado: 2
+NumAristas: 2
+Arista
+1 2 2
+OperacionesEscrituraCinta
+1 1 R
+2 1 R
+Arista
+B 3 1
+OperacionesEscrituraCinta
+1 B L
+idEstado: 3
+NumAristas: 3
+Arista
+1 3 1
+OperacionesEscrituraCinta
+1 1 L
+Arista
+* 3 1
+OperacionesEscrituraCinta
+1 * L
+Arista
+0 0 1
+OperacionesEscrituraCinta
+1 0 R

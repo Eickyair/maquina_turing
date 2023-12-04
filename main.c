@@ -2,6 +2,7 @@
 #include <string.h>
 #define MAX_CARACTERES_POR_LINEA 100
 #define INFINITO 10
+#define BLANCO 'B'
 char LECTURA_CADENA[MAX_CARACTERES_POR_LINEA];
 char *TOKEN = NULL;
 const char DELIMITADOR = ' ';
@@ -55,7 +56,13 @@ struct Cinta
 
 struct Automata
 {
-    struct Estado **estados;
+    int numeroEstadosFinales;
+    int estadoInicial; // q0
+    int *estadosFinales; //F
+    char *sigma; // Alfabeto de entrada
+    char *gamma; // Alfabeto de la cintas
+    int numeroEstados; // Q
+    struct Estado **estados; // Delta: Funcion de transferencia
     struct Cinta *cinta1;
     struct Cinta *cinta2;
 };
@@ -121,6 +128,7 @@ void imprimirTokens()
 {
     TOKEN = leerTokens();
     printf("%s", TOKEN);
+    TOKEN = siguienteToken();
     while (TOKEN != NULL)
     {
         printf("%c",DELIMITADOR);

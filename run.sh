@@ -7,15 +7,31 @@
   # Si la ejecución es exitosa, se elimina el archivo ejecutable "main".
   # En caso de que ocurra algún error durante la compilación o ejecución, se muestra un mensaje de error correspondiente.
 clear
+
+# Compila el archivo main.c con gcc y establece las opciones de compilación
+# -std=c99, -Wall, -Wextra y -pedantic. El resultado se guarda en un archivo
+# ejecutable llamado "main".
+
 gcc main.c -o main -std=c99 -Wall -Wextra -pedantic -g
+
+# Verifica si la compilación fue exitosa
 if [ $? -eq 0 ]; then
+  # Ejecuta el programa "main" con el archivo de entrada "input.txt" y redirige
+  # la salida al archivo "output.txt".
   ./main < input.txt > output.txt
+
+  # Verifica si la ejecución del programa fue exitosa
   if [ $? -eq 0 ]; then
+    # Elimina el archivo ejecutable "main"
     rm ./main
+
+    # Imprime un mensaje indicando que el programa se ejecutó correctamente
     echo "El programa se ejecutó correctamente."
   else
+    # Imprime un mensaje de error si no se pudo ejecutar el programa correctamente
     echo "Error: No se pudo ejecutar el programa correctamente."
   fi
 else
+  # Imprime un mensaje de error si no se pudo compilar el programa correctamente
   echo "Error: No se pudo compilar el programa correctamente."
 fi

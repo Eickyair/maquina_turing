@@ -5,8 +5,25 @@
 char LECTURA_CADENA[MAX_CARACTERES_POR_LINEA];
 char *TOKEN = NULL;
 const char DELIMITADOR = ' ';
+/**
+ * @brief Macro para leer una cadena de caracteres desde la entrada estándar.
+ * 
+ * @return Puntero a la cadena leída.
+ */
 #define leerCadena() fgets(LECTURA_CADENA, MAX_CARACTERES_POR_LINEA, stdin)
+
+/**
+ * @brief Macro para leer los tokens de una cadena.
+ * 
+ * @return Puntero al primer token encontrado.
+ */
 #define leerTokens() strtok(LECTURA_CADENA, &DELIMITADOR)
+
+/**
+ * @brief Macro para obtener el siguiente token de una cadena.
+ * 
+ * @return Puntero al siguiente token encontrado.
+ */
 #define siguienteToken() strtok(NULL, &DELIMITADOR)
 
 
@@ -42,6 +59,11 @@ struct Automata
     struct Cinta *cinta1;
     struct Cinta *cinta2;
 };
+/**
+ * Imprime una operación de escritura en formato JSON.
+ * 
+ * @param operacion Puntero a la estructura de la operación de escritura.
+ */
 void imprimirOperacionEscrituraCintaJSON(struct OperacionEscrituraCinta *operacion)
 {
     printf("{\n");
@@ -50,6 +72,11 @@ void imprimirOperacionEscrituraCintaJSON(struct OperacionEscrituraCinta *operaci
     printf("\t\"operacion\": \"%c\"\n", operacion->operacion);
     printf("}\n");
 }
+/**
+ * Imprime una arista en formato JSON.
+ * 
+ * @param arista La arista a imprimir.
+ */
 void imprimirAristaJSON(struct Arista *arista)
 {
     printf("{\n");
@@ -68,6 +95,11 @@ void imprimirAristaJSON(struct Arista *arista)
     printf("\n\t]\n");
     printf("}\n");
 }
+/**
+ * Imprime el estado actual de la cinta.
+ * 
+ * @param cinta Puntero a la estructura de la cinta.
+ */
 void imprimirCinta(struct Cinta *cinta)
 {
     printf("Cabezal: %d\n", cinta->cabezal);
@@ -78,6 +110,13 @@ void imprimirCinta(struct Cinta *cinta)
     }
     printf("\n");
 }
+/**
+ * Función que imprime los tokens obtenidos.
+ * 
+ * Esta función lee los tokens utilizando la función leerTokens() y los imprime en la consola.
+ * Cada token se imprime seguido de un delimitador.
+ * La función continúa imprimiendo tokens hasta que se llegue al final de los tokens.
+ */
 void imprimirTokens()
 {
     TOKEN = leerTokens();

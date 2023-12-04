@@ -8,7 +8,7 @@
 		"ghcr.io/devcontainers/features/git:1": {},
 		"ghcr.io/devcontainers-contrib/features/apt-get-packages:1": {},
 		"ghcr.io/devcontainers-contrib/features/wget-apt-get:1": {}
-	}
+	},
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
@@ -20,7 +20,11 @@
 	// "postCreateCommand": "uname -a",
 
 	// Configure tool-specific properties.
-	// "customizations": {},
+	"customizations": {
+		"vscode": {
+			"extensions": ["dbaeumer.vscode-eslint","eamodio.gitlens","ms-vscode.cpptools","usernamehw.errorlens","pkief.material-icon-theme","shardulm94.trailing-spaces","esbenp.prettier-vscode"]
+		}
+	}
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"

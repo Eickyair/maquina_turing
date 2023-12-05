@@ -30,7 +30,7 @@
 ### Pasos para abrir el entorno en un Dev Container:
 1. Abre el proyecto en Visual Studio Code.
 2. Ve al menú "View" y selecciona "Command Palette" (o presiona Ctrl+Shift+P en Windows/Linux o Cmd+Shift+P en macOS).
-3. Escribe "Remote-Containers: Open Folder in Container" y selecciona la opción correspondiente.
+3. Escribe "dev container" y busca la opccion de "Open Folder in...".
 4. Selecciona la carpeta del proyecto que deseas abrir en un Dev Container.
 5. Espera a que se construya el contenedor y se abra el entorno de desarrollo en el contenedor.
 

@@ -19,6 +19,7 @@ if [ $? -eq 0 ]; then
   # Verifica si se recibió la bandera -t
   if [ "$1" = "-t" ]; then
     # Ejecuta el programa "main" con el archivo de entrada "test.txt" y redirige
+    # Asi no se afecta el input.txt y test.txt es un archivo local para cada desarrollador
     # la salida al archivo "output.txt".
     ./main < test.txt > output.txt
   else

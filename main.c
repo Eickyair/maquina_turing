@@ -909,7 +909,11 @@ void insertarCadenaACinta(struct Automata* maquina, const char* cadena) {
 
 /**
  * Ejecuta los casos de prueba para una máquina de Turing.
- *
+ * Formato de la entrada:
+ * |T|: <numero_test_cases>
+ * <numero_1> <numero_2> <debe_aceptar>
+ * <numero_1> <numero_2> <debe_aceptar>
+ * ...
  * @param maquina Puntero a la estructura de la máquina de Turing.
  */
 void ejecutarTestCases(struct Automata* maquina) {

@@ -1,20 +1,15 @@
-/**
- * @file main.c
- * @brief Este archivo contiene el código principal de la máquina de Turing.
- *        Incluye las bibliotecas necesarias y define las funciones principales.
- */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #define MAX_CARACTERES_POR_LINEA 100
 #define INFINITO 10
-#define BLANCO 'B'
- /**
-  * Imprime un arreglo de números en el formato [num1, num2, num3, ...].
-  *
-  * @param arr El arreglo de números a imprimir.
-  * @param size El tamaño del arreglo.
-  */
+#define VACIO ' '
+/**
+ * Imprime un arreglo de números en el formato [num1, num2, num3, ...].
+ *
+ * @param arr El arreglo de números a imprimir.
+ * @param size El tamaño del arreglo.
+ */
 #define imprimirArregloNumeros(arr, size) \
     printf("[");                          \
     for (int i = 0; i < size; i++)        \
@@ -27,12 +22,12 @@
     }                                     \
     printf("]\n");
 
-  /**
-   * Imprime un arreglo de caracteres en el formato [elemento1, elemento2, ...].
-   *
-   * @param arr El arreglo de caracteres a imprimir.
-   * @param size El tamaño del arreglo.
-   */
+ /**
+  * Imprime un arreglo de caracteres en el formato [elemento1, elemento2, ...].
+  *
+  * @param arr El arreglo de caracteres a imprimir.
+  * @param size El tamaño del arreglo.
+  */
 #define imprimirArregloCaracteres(arr, size) \
     printf("[");                             \
     for (int i = 0; i < size; i++)           \
@@ -43,18 +38,18 @@
             printf(", ");                    \
         }                                    \
     }                                        \
-    printf("]\n")
-   /**
-    * @brief Imprime el valor de una variable numérica junto con su nombre.
-    *
-    * @param variable La variable numérica a imprimir.
-    */
+    printf("]\n");
+  /**
+   * @brief Imprime el valor de una variable numérica junto con su nombre.
+   *
+   * @param variable La variable numérica a imprimir.
+   */
 #define imprimirVariableNumerica(variable) printf("%s = %d\n", #variable, variable)
-    /**
-     * @brief Imprime el valor de una variable de tipo caracter.
-     *
-     * @param variable La variable de tipo caracter a imprimir.
-     */
+   /**
+    * @brief Imprime el valor de una variable de tipo caracter.
+    *
+    * @param variable La variable de tipo caracter a imprimir.
+    */
 #define imprimirVariableCaracter(variable) printf("%s = '%c'\n", #variable, variable)
 
 char LECTURA_CADENA[MAX_CARACTERES_POR_LINEA];
@@ -111,11 +106,48 @@ const char DELIMITADOR = ' ';
     }
 
      /**
-      * @struct OperacionEscrituraCinta
-      * @brief Estructura que representa una operación de escritura en una cinta de una máquina de Turing.
+      * @brief Imprime la estructura de la cinta.
       *
-      * Esta estructura contiene información sobre el número de la cinta, el símbolo a escribir y la operación a realizar ('L' o 'R').
+      * Esta macro imprime el arreglo de símbolos de la cinta y muestra un símbolo '^' en el índice donde se encuentra el valor del cabezal.
+      *
+      * @param cinta Puntero a la estructura de datos de la cinta.
+      * @param indiceCabezal Índice donde se encuentra el valor del cabezal.
       */
+#define imprimirCinta(cinta, longitudCinta)                         \
+    imprimirArregloCaracteres(cinta->simbolos, longitudCinta);      \
+    imprimirVariableNumerica(cinta->cabezal);                       \
+
+
+#define imprimirAutomata(automata) \
+    imprimirVariableNumerica(automata->numeroEstadosFinales);                                 \
+    imprimirVariableNumerica(automata->estadoInicial);                                        \
+    imprimirArregloNumeros(automata->estadosFinales, automata->numeroEstadosFinales);         \
+    imprimirVariableNumerica(automata->numElementosSigma);                                    \
+    imprimirArregloCaracteres(automata->sigma, automata->numElementosSigma);                  \
+    imprimirVariableNumerica(automata->numElementosGamma);                                    \
+    imprimirArregloCaracteres(automata->gamma, automata->numElementosGamma);                  \
+    imprimirVariableNumerica(automata->numeroEstados);                                        \
+    for (int i = 0; i < automata->numeroEstados; i++)                                         \
+    {                                                                                         \
+        struct Estado *estado = automata->estados + i;                                        \
+        imprimirVariableNumerica(estado->estado);                                             \
+        imprimirVariableNumerica(estado->numAristas);                                         \
+        for (int j = 0; j < estado->numAristas; j++)                                          \
+        {                                                                                     \
+            struct Arista *arista = estado->aristas + j;                                      \
+            imprimirArista(arista);                                                           \
+        }                                                                                     \
+    }
+
+
+
+
+      /**
+       * @struct OperacionEscrituraCinta
+       * @brief Estructura que representa una operación de escritura en una cinta de una máquina de Turing.
+       *
+       * Esta estructura contiene información sobre el número de la cinta, el símbolo a escribir y la operación a realizar ('L' o 'R').
+       */
 struct OperacionEscrituraCinta
 {
     int numeroCinta;
@@ -435,6 +467,13 @@ struct Estado* leerEstados(int numeroEstados)
     }
     return estados;
 }
+void initializeCinta(struct Cinta* cinta, int longitud) {
+    cinta->cabezal = 0;
+    for (int i = 0; i < longitud; i++) {
+        cinta->simbolos[i] = VACIO;
+    }
+}
+
 /**
  * Función que lee un autómata desde la entrada estándar.
  *
@@ -444,30 +483,26 @@ struct Automata* leerAutomata()
 {
     struct Automata* automata = (struct Automata*)malloc(sizeof(struct Automata));
     automata->estadoInicial = leerValorEstadoInicial();
-    imprimirVariableNumerica(automata->estadoInicial);
     automata->numeroEstadosFinales = leerNumEstadosFinales();
-    imprimirVariableNumerica(automata->numeroEstadosFinales);
     automata->estadosFinales = leerEstadosFinales(automata->numeroEstadosFinales);
-    imprimirArregloNumeros(automata->estadosFinales, automata->numeroEstadosFinales);
     automata->numElementosSigma = leerNumElementosSigma();
-    imprimirVariableNumerica(automata->numElementosSigma);
     automata->sigma = leerSigma(automata->numElementosSigma);
-    imprimirArregloCaracteres(automata->sigma, automata->numElementosSigma);
     automata->numElementosGamma = leerNumeroElementosGamma();
-    imprimirVariableNumerica(automata->numElementosGamma);
     automata->gamma = leerGamma(automata->numElementosGamma);
-    imprimirArregloCaracteres(automata->gamma, automata->numElementosGamma);
     automata->numeroEstados = leerNumeroEstados();
-    imprimirVariableNumerica(automata->numeroEstados);
     automata->estados = leerEstados(automata->numeroEstados);
-    imprimirArista(automata->estados[0].aristas);
-    const struct Arista* arista = automata->estados[0].aristas + 1;
-    imprimirArista(arista);
+    automata->cinta1 = (struct Cinta*)malloc(sizeof(struct Cinta));
+    automata->cinta2 = (struct Cinta*)malloc(sizeof(struct Cinta));
+    initializeCinta(automata->cinta1, INFINITO);
+    initializeCinta(automata->cinta2, INFINITO);
     return automata;
 }
 
 int main()
 {
     const struct Automata* automata = leerAutomata();
+    imprimirAutomata(automata);
+    imprimirCinta(automata->cinta1, INFINITO);
+    imprimirCinta(automata->cinta2, INFINITO);
     return 0;
 }

@@ -3,7 +3,25 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-bool LOGS_ACTIVADO = false;
+/**
+ * @brief Variable que indica si los logs están activados o desactivados.
+ *
+ * Si el valor es true, los logs están activados.
+ * Si el valor es false, los logs están desactivados.
+ * @attention SOLO PRENDER ESTA VARIABLE CON LOS TESTCASES POR DEFECTO
+ */
+bool LOGS_ACTIVADO = true;
+/**
+ * @brief Calculates the minimum value between two integers.
+ *
+ * This function takes two integers as input and returns the minimum value between them.
+ * If the first integer is less than the second integer, the first integer is returned.
+ * Otherwise, the second integer is returned.
+ *
+ * @param a The first integer.
+ * @param b The second integer.
+ * @return The minimum value between the two integers.
+ */
 int min(int a, int b) {
     if (a < b) {
         return a;
@@ -12,15 +30,24 @@ int min(int a, int b) {
         return b;
     }
 }
-#define MAX_CARACTERES_POR_LINEA 40
+/**
+ * @brief Define la constante MAX_CARACTERES_POR_LINEA que representa el número máximo de caracteres por línea.
+ */
+#define MAX_CARACTERES_POR_LINEA 35
+ /**
+  * @brief Constante que representa el valor infinito.
+  *
+  * Esta constante se utiliza para representar un valor infinito en el programa.
+  * Su valor es 2147483647, que es el máximo valor que puede ser representado por un entero de 32 bits con signo.
+  */
 #define INFINITO 2147483647
 #define VACIO ' '
-/**
- * Imprime un arreglo de números en el formato [num1, num2, num3, ...].
- *
- * @param arr El arreglo de números a imprimir.
- * @param size El tamaño del arreglo.
- */
+  /**
+   * Imprime un arreglo de números en el formato [num1, num2, num3, ...].
+   *
+   * @param arr El arreglo de números a imprimir.
+   * @param size El tamaño del arreglo.
+   */
 #define imprimirArregloNumeros(arr, size) \
     printf("[");                          \
     for (int i = 0; i < size; i++)        \
@@ -33,12 +60,12 @@ int min(int a, int b) {
     }                                     \
     printf("]\n");
 
- /**
-  * Imprime un arreglo de caracteres en el formato [elemento1, elemento2, ...].
-  *
-  * @param arr El arreglo de caracteres a imprimir.
-  * @param size El tamaño del arreglo.
-  */
+   /**
+    * Imprime un arreglo de caracteres en el formato [elemento1, elemento2, ...].
+    *
+    * @param arr El arreglo de caracteres a imprimir.
+    * @param size El tamaño del arreglo.
+    */
 #define imprimirArregloCaracteres(arr, size) \
     printf("[");                             \
     for (int i = 0; i < size; i++)           \
@@ -50,30 +77,42 @@ int min(int a, int b) {
         }                                    \
     }                                        \
     printf("]\n");
-  /**
-   * @brief Imprime el valor de una variable numérica junto con su nombre.
-   *
-   * @param variable La variable numérica a imprimir.
-   */
-#define imprimirVariableNumerica(variable) printf("%s = %d\n", #variable, variable);
-   /**
-    * @brief Imprime el valor de una variable de tipo caracter.
-    *
-    * @param variable La variable de tipo caracter a imprimir.
-    */
-#define imprimirVariableCaracter(variable) printf("%s = '%c'\n", #variable, variable)
-
     /**
-     * @brief Macro para logear un error y terminar el programa con error.
+     * @brief Imprime el valor de una variable numérica junto con su nombre.
      *
-     * @param mensaje El mensaje de error a logear.
+     * @param variable La variable numérica a imprimir.
      */
-#define logError(mensaje) \
-        fprintf(stderr, "MAIN::ERROR:: %s\n", mensaje); \
-        exit(EXIT_FAILURE); \
+#define imprimirVariableNumerica(variable) printf("%s = %d\n", #variable, variable);
+     /**
+      * @brief Imprime el valor de una variable de tipo caracter.
+      *
+      * @param variable La variable de tipo caracter a imprimir.
+      */
+#define imprimirVariableCaracter(variable) printf("%s = '%c'\n", #variable, variable);
 
+
+      /**
+       * @brief Cadena de caracteres para almacenar la entrada leída.
+       *
+       * Esta variable se utiliza para almacenar la cadena de caracteres leída desde la entrada.
+       * Tiene un tamaño máximo definido por la constante MAX_CARACTERES_POR_LINEA.
+       */
 char LECTURA_CADENA[MAX_CARACTERES_POR_LINEA];
+
+/**
+ * @brief Puntero a char utilizado para dividir la cadena en tokens.
+ *
+ * Este puntero se utiliza para dividir la cadena de caracteres en tokens utilizando el delimitador especificado.
+ * Se inicializa como NULL y se actualiza durante el proceso de división de la cadena.
+ */
 char* TOKEN = NULL;
+
+/**
+ * @brief Delimitador utilizado para dividir la cadena en tokens.
+ *
+ * Este carácter se utiliza como delimitador para dividir la cadena de caracteres en tokens.
+ * Los tokens se obtienen utilizando la función strtok().
+ */
 const char DELIMITADOR = ' ';
 /**
  * @brief Macro para leer una cadena de caracteres desde la entrada estándar.
@@ -103,17 +142,22 @@ const char DELIMITADOR = ' ';
 #define saltarEtiqueta() \
     TOKEN = tokenizar(); \
     TOKEN = siguienteToken()
+    /**
+     * Imprime la operación de escritura de una cinta.
+     *
+     * @param ptr Puntero a la estructura que contiene los datos de la operación.
+     */
 #define imprimirOperacionEscrituraCinta(ptr)         \
     imprimirVariableNumerica(ptr->numeroCinta);      \
     imprimirVariableCaracter(ptr->simboloEscritura); \
     imprimirVariableCaracter(ptr->operacion)
-    /**
-     * @brief Imprime los detalles de una arista.
-     *
-     * Esta macro imprime el símbolo de lectura, el estado de destino y las operaciones de escritura de una arista.
-     *
-     * @param arista Puntero a la estructura de datos de la arista.
-     */
+     /**
+      * @brief Imprime los detalles de una arista.
+      *
+      * Esta macro imprime el símbolo de lectura, el estado de destino y las operaciones de escritura de una arista.
+      *
+      * @param arista Puntero a la estructura de datos de la arista.
+      */
 #define imprimirArista(arista)                                                                           \
     printf("Arista:\n");                                                                                 \
     imprimirVariableCaracter(arista->simboloLectura);                                                    \
@@ -124,11 +168,11 @@ const char DELIMITADOR = ' ';
         struct OperacionEscrituraCinta *operacionEscrituraCinta = arista->operacionesEscrituraCinta + i; \
         imprimirOperacionEscrituraCinta(operacionEscrituraCinta);                                        \
     }
-     /**
-      * Function to print the position of the tape head.
-      *
-      * @param cabezal The position of the tape head.
-      */
+      /**
+       * Function to print the position of the tape head.
+       *
+       * @param cabezal The position of the tape head.
+       */
 #define imprimirCabezal(cabezal)                              \
     if (cabezal < 0)                                          \
     {                                                         \
@@ -147,14 +191,14 @@ const char DELIMITADOR = ' ';
         }                                                     \
         printf("    ^\n");                                    \
     }
-      /**
-       * @brief Imprime la estructura de la cinta.
-       *
-       * Esta macro imprime el arreglo de símbolos de la cinta y muestra un símbolo '^' en el índice donde se encuentra el valor del cabezal.
-       *
-       * @param cinta Puntero a la estructura de datos de la cinta.
-       * @param indiceCabezal Índice donde se encuentra el valor del cabezal.
-       */
+       /**
+        * @brief Imprime la estructura de la cinta.
+        *
+        * Esta macro imprime el arreglo de símbolos de la cinta y muestra un símbolo '^' en el índice donde se encuentra el valor del cabezal.
+        *
+        * @param cinta Puntero a la estructura de datos de la cinta.
+        * @param indiceCabezal Índice donde se encuentra el valor del cabezal.
+        */
 #define imprimirCinta(cinta, longitudCinta)                         \
     printf("%s\n", #cinta);                                         \
     imprimirVariableNumerica(cinta->cabezal);                       \
@@ -163,6 +207,13 @@ const char DELIMITADOR = ' ';
 
 
 
+        /**
+         * Function: imprimirAutomata
+         * -------------------------
+         * Imprime los detalles de un autómata.
+         *
+         * automata: Puntero al autómata que se desea imprimir.
+         */
 #define imprimirAutomata(automata) \
     imprimirVariableNumerica(automata->numeroEstadosFinales);                                 \
     imprimirVariableNumerica(automata->estadoInicial);                                        \
@@ -197,12 +248,12 @@ const char DELIMITADOR = ' ';
 
 
 
-       /**
-        * @struct OperacionEscrituraCinta
-        * @brief Estructura que representa una operación de escritura en una cinta de una máquina de Turing.
-        *
-        * Esta estructura contiene información sobre el número de la cinta, el símbolo a escribir y la operación a realizar ('L' o 'R').
-        */
+         /**
+          * @struct OperacionEscrituraCinta
+          * @brief Estructura que representa una operación de escritura en una cinta de una máquina de Turing.
+          *
+          * Esta estructura contiene información sobre el número de la cinta, el símbolo a escribir y la operación a realizar ('L' o 'R').
+          */
 struct OperacionEscrituraCinta
 {
     int numeroCinta;
@@ -570,6 +621,14 @@ bool simboloEnSigma(char simbolo, char* sigma, int numElementosSigma)
     }
     return false;
 }
+/**
+ * Verifica si un símbolo se encuentra en el conjunto gamma.
+ *
+ * @param simbolo El símbolo a verificar.
+ * @param gamma   El conjunto de símbolos gamma.
+ * @param numElementosGamma El número de elementos en el conjunto gamma.
+ * @return true si el símbolo se encuentra en gamma, false en caso contrario.
+ */
 bool simboloEnGamma(char simbolo, char* gamma, int numElementosGamma)
 {
     for (int i = 0; i < numElementosGamma; i++)
@@ -591,16 +650,6 @@ bool simboloEnGamma(char simbolo, char* gamma, int numElementosGamma)
  */
 void insertarValorACinta(const struct Automata* maquina, int valor)
 {
-    const bool simboloMenosEnSigma = simboloEnSigma('-', maquina->sigma, maquina->numElementosSigma);
-    const bool simboloUnoEnSigma = simboloEnSigma('1', maquina->sigma, maquina->numElementosSigma);
-    if (!simboloUnoEnSigma)
-    {
-        logError("El símbolo '1' no está en el alfabeto de entrada");
-    }
-    if (!simboloMenosEnSigma)
-    {
-        logError("El símbolo '-' no está en el alfabeto de entrada");
-    }
     struct Cinta* c = maquina->cinta1;
     if (valor < 0)
     {
@@ -624,24 +673,22 @@ void insertarValorACinta(const struct Automata* maquina, int valor)
 void insertarUnValorACinta(const struct Automata* maquina, char simbolo, int numeroCinta) {
     struct Cinta* c = NULL;
     if (numeroCinta == 1) {
-        // const bool simboloEnConjuntoSigma = simboloEnSigma(simbolo, maquina->sigma, maquina->numElementosSigma);
-        // if (!simboloEnConjuntoSigma)
-        // {
-        //     logError("El símbolo no está en el alfabeto de entrada");
-        // }
         c = maquina->cinta1;
     }
     else {
-        // const bool simboloEnConjuntoGamma = simboloEnGamma(simbolo, maquina->gamma, maquina->numElementosGamma);
-        // if (!simboloEnConjuntoGamma)
-        // {
-        //     logError("El símbolo no está el Gamma");
-        // }
         c = maquina->cinta2;
     }
     c->simbolos[c->cabezal] = simbolo;
     c->cabezal++;
 }
+/**
+ * Verifica si un estado es un estado final.
+ *
+ * @param estado El estado a verificar.
+ * @param estadosFinales Un arreglo de estados finales.
+ * @param numeroEstadosFinales El número de estados finales en el arreglo.
+ * @return true si el estado es un estado final, false de lo contrario.
+ */
 bool esEstadoFinal(int estado, int* estadosFinales, int numeroEstadosFinales)
 {
     for (int i = 0; i < numeroEstadosFinales; i++)
@@ -653,6 +700,14 @@ bool esEstadoFinal(int estado, int* estadosFinales, int numeroEstadosFinales)
     }
     return false;
 }
+/**
+ * Busca una arista en un arreglo de aristas basándose en un símbolo leído.
+ *
+ * @param simboloLeido El símbolo leído a buscar en las aristas.
+ * @param aristas El arreglo de aristas en el que se realizará la búsqueda.
+ * @param numeroAristas El número de aristas en el arreglo.
+ * @return Un puntero a la arista encontrada, o NULL si no se encontró ninguna arista con el símbolo leído.
+ */
 struct Arista* buscarArista(char simboloLeido, struct Arista* aristas, int numeroAristas) {
     for (int i = 0; i < numeroAristas; i++)
     {
@@ -663,6 +718,12 @@ struct Arista* buscarArista(char simboloLeido, struct Arista* aristas, int numer
     }
     return NULL;
 }
+/**
+ * @brief Escribe un símbolo en la cinta especificada y realiza una operación de movimiento del cabezal.
+ *
+ * @param maquina Puntero a la estructura del autómata.
+ * @param operacionEscrituraCinta Puntero a la estructura de la operación de escritura en la cinta.
+ */
 void escribirEnCinta(const struct Automata* maquina, struct OperacionEscrituraCinta* operacionEscrituraCinta) {
     struct Cinta* cinta = NULL;
     if (operacionEscrituraCinta->numeroCinta == 1)
@@ -673,9 +734,6 @@ void escribirEnCinta(const struct Automata* maquina, struct OperacionEscrituraCi
     {
         cinta = maquina->cinta2;
     }
-    else {
-        logError("El número de cinta no es válido");
-    }
     cinta->simbolos[cinta->cabezal] = operacionEscrituraCinta->simboloEscritura;
     if (operacionEscrituraCinta->operacion == 'L')
     {
@@ -685,23 +743,34 @@ void escribirEnCinta(const struct Automata* maquina, struct OperacionEscrituraCi
     {
         cinta->cabezal++;
     }
-    else {
-        logError("La operación no es válida");
-    }
 }
+
+/**
+ * Resuelve una arista ejecutando las operaciones de escritura de cinta asociadas.
+ *
+ * @param aristaAEjecutar La arista a ejecutar.
+ * @param maquina La máquina de Turing.
+ */
 void resolverArista(const struct Arista* aristaAEjecutar, const struct Automata* maquina) {
-    if (aristaAEjecutar == NULL) {
-        logError("No se encontró la arista");
-    }
     for (int i = 0; i < aristaAEjecutar->numeroOperacionesEscrituraCinta; i++)
     {
         struct OperacionEscrituraCinta* operacionEscrituraCinta = aristaAEjecutar->operacionesEscrituraCinta + i;
         escribirEnCinta(maquina, operacionEscrituraCinta);
     }
 }
+/**
+ * Ejecuta la máquina de Turing.
+ *
+ * @param maquina Puntero a la estructura Automata que representa la máquina de Turing.
+ * @param logs Indica si se deben imprimir los logs de ejecución.
+ * @return true si la ejecución fue exitosa, false si hubo un error.
+ */
 bool ejecutar(struct Automata* maquina, bool logs) {
     if (logs == true) {
         printf("__________________________________________EJECUCION__________________________________________\n");
+        printf("________________________________________________________________CINTAS_INICIO________________________________________________________________\n");
+        imprimirCinta(maquina->cinta1, MAX_CARACTERES_POR_LINEA);
+        imprimirCinta(maquina->cinta2, MAX_CARACTERES_POR_LINEA);
     }
     bool esFinal = esEstadoFinal(maquina->estadoActual->estado, maquina->estadosFinales, maquina->numeroEstadosFinales);
     struct Arista* aristaAEjecutar = NULL;
@@ -737,6 +806,13 @@ bool ejecutar(struct Automata* maquina, bool logs) {
     maquina->cinta2->simbolos[maquina->cinta2->cabezal] = '$';
     return true;
 }
+/**
+ * Inicializa el autómata con los valores proporcionados.
+ *
+ * @param maquina Puntero al autómata a inicializar.
+ * @param numero1 Valor a insertar en la cinta 1.
+ * @param numero2 Valor a insertar en la cinta 2.
+ */
 void inicializarAutomata(struct Automata* maquina, int numero1, int numero2) {
     maquina->cinta1->cabezal = 0;
     maquina->cinta2->cabezal = 0;
@@ -747,6 +823,12 @@ void inicializarAutomata(struct Automata* maquina, int numero1, int numero2) {
     insertarValorACinta(maquina, numero2);
     insertarUnValorACinta(maquina, '$', 1);
 }
+/**
+ * Determina el valor multiplicado de una máquina de Turing.
+ *
+ * @param maquina Puntero a la estructura de la máquina de Turing.
+ * @return El valor multiplicado determinado por la máquina de Turing.
+ */
 int determinarValorMulti(struct Automata* maquina) {
     int resultado = 0;
     int signo = 1;
@@ -761,14 +843,21 @@ int determinarValorMulti(struct Automata* maquina) {
         }
         else if (maquina->cinta2->simbolos[i] == '$') {
             if (LOGS_ACTIVADO == true) {
-                imprimirVariableNumerica(resultado * signo)
-                    imprimirVariableNumerica(i)
+                imprimirVariableNumerica(resultado * signo);
+                imprimirVariableNumerica(i);
             }
             break;
         }
     }
     return resultado * signo;
 }
+/**
+ * Verifica si hay desbordamiento al multiplicar dos números enteros.
+ *
+ * @param a El primer número entero.
+ * @param b El segundo número entero.
+ * @return true si hay desbordamiento, false en caso contrario.
+ */
 bool hayDesbordamiento(int a, int b) {
     long long producto = (long long)a * b;
     int maxPositivo = (1 << 31) - 1;
@@ -777,21 +866,40 @@ bool hayDesbordamiento(int a, int b) {
     if (producto <= maxNegativo) return true;
     return false;
 }
+/**
+ * @brief Verifica si una cadena de caracteres representa un número entero.
+ *
+ * @param cadena La cadena de caracteres a verificar.
+ * @return true si la cadena representa un número entero, false en caso contrario.
+ */
 bool esEntero(const char* cadena) {
+    // Verifica si la cadena es nula o vacía
     if (cadena == NULL || *cadena == '\0') {
         return false;
     }
+
     int i = 0;
+
+    // Si la cadena comienza con un signo negativo o positivo, se ignora ese carácter
     if (cadena[0] == '-' || cadena[0] == '+') {
         i++;
     }
+
+    // Verifica si todos los caracteres de la cadena son dígitos
     for (; cadena[i] != '\0'; i++) {
         if (cadena[i] < '0' || cadena[i] > '9') {
             return false;
         }
     }
+
     return true;
 }
+/**
+ * Inserta una cadena en la cinta de una máquina de Turing.
+ *
+ * @param maquina La máquina de Turing en la que se insertará la cadena.
+ * @param cadena La cadena que se insertará en la cinta.
+ */
 void insertarCadenaACinta(struct Automata* maquina, const char* cadena) {
     int longitud = strlen(cadena);
     for (int i = 0; i < longitud; i++) {
@@ -799,6 +907,11 @@ void insertarCadenaACinta(struct Automata* maquina, const char* cadena) {
     }
 }
 
+/**
+ * Ejecuta los casos de prueba para una máquina de Turing.
+ *
+ * @param maquina Puntero a la estructura de la máquina de Turing.
+ */
 void ejecutarTestCases(struct Automata* maquina) {
     leerCadena();
     saltarEtiqueta();
@@ -806,6 +919,9 @@ void ejecutarTestCases(struct Automata* maquina) {
     imprimirVariableNumerica(numeroTestCases);
     int testCasesEjecutados = 1;
     while (numeroTestCases--) {
+        maquina->cinta1->cabezal = 0;
+        maquina->cinta2->cabezal = 0;
+        maquina->estadoActual = buscarEstado(maquina->estadoInicial, maquina->estados, maquina->numeroEstados);
         TOKEN = leerCadena();
         TOKEN = tokenizar();
         int numero1;
@@ -828,14 +944,17 @@ void ejecutarTestCases(struct Automata* maquina) {
         }
         TOKEN = siguienteToken();
         int debeAceptar = atoi(TOKEN);
-        if (esEntero1 == true && esEntero2 == true) {
-            inicializarAutomata(maquina, numero1, numero2);
-        }
         if (hayDesbordamiento(numero1, numero2)) {
             printf("_________________________________________________________TEST_CASE:: %d: OVERFLOW::EL PRODUCTO NO CABE EN UN INT\n", testCasesEjecutados);
             testCasesEjecutados++;
             continue;
         }
+        if (esEntero1 == true && esEntero2 == true) {
+            inicializarAutomata(maquina, numero1, numero2);
+        }
+        maquina->cinta1->cabezal = 0;
+        maquina->cinta2->cabezal = 0;
+        maquina->estadoActual = buscarEstado(maquina->estadoInicial, maquina->estados, maquina->numeroEstados);
         int valorEsperado = numero1 * numero2;
         bool aceptacion = ejecutar(maquina, LOGS_ACTIVADO == true && valorEsperado < 15);
         int resultado;
@@ -850,8 +969,8 @@ void ejecutarTestCases(struct Automata* maquina) {
         }
         if (LOGS_ACTIVADO == true) {
             if (maquina->cinta2->cabezal <= MAX_CARACTERES_POR_LINEA) {
-                imprimirCinta(maquina->cinta1, maquina->cinta1->cabezal + 5);
-                imprimirCinta(maquina->cinta2, maquina->cinta2->cabezal + 5);
+                imprimirCinta(maquina->cinta1, MAX_CARACTERES_POR_LINEA);
+                imprimirCinta(maquina->cinta2, MAX_CARACTERES_POR_LINEA);
             }
             else {
                 printf("LOG::ADVERTENCIA::EL TOPE DE LA CINTA 2 ES MAYOR A %d\n", MAX_CARACTERES_POR_LINEA);

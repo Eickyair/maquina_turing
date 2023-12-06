@@ -61,28 +61,59 @@ const char DELIMITADOR = ' ';
 #define saltarEtiqueta() \
     TOKEN = tokenizar(); \
     TOKEN = siguienteToken()
-#define imprimirOperacionEscrituraCinta(ptr)                      \
-    imprimirVariableNumerica(ptr->numeroCinta); \
+#define imprimirOperacionEscrituraCinta(ptr)         \
+    imprimirVariableNumerica(ptr->numeroCinta);      \
     imprimirVariableCaracter(ptr->simboloEscritura); \
     imprimirVariableCaracter(ptr->operacion)
-#define imprimirArista(ptr) \
-    imprimirVariableCaracter(ptr->simboloLectura); \
-    imprimirVariableNumerica(ptr->estadoDestino); \
-    imprimirVariableNumerica(ptr->numeroOperacionesEscrituraCinta)
+/**
+ * @brief Imprime los detalles de una arista.
+ *
+ * Esta macro imprime el símbolo de lectura, el estado de destino y las operaciones de escritura de una arista.
+ *
+ * @param arista Puntero a la estructura de datos de la arista.
+ */
+#define imprimirArista(arista)                                                                           \
+    printf("Arista:\n");                                                                                 \
+    imprimirVariableCaracter(arista->simboloLectura);                                                    \
+    imprimirVariableNumerica(arista->estadoDestino);                                                     \
+    imprimirVariableNumerica(arista->numeroOperacionesEscrituraCinta);                                   \
+    for (int i = 0; i < arista->numeroOperacionesEscrituraCinta; i++)                                    \
+    {                                                                                                    \
+        struct OperacionEscrituraCinta *operacionEscrituraCinta = arista->operacionesEscrituraCinta + i; \
+        imprimirOperacionEscrituraCinta(operacionEscrituraCinta);                                        \
+    }
+
+/**
+ * @struct OperacionEscrituraCinta
+ * @brief Estructura que representa una operación de escritura en una cinta de una máquina de Turing.
+ *
+ * Esta estructura contiene información sobre el número de la cinta, el símbolo a escribir y la operación a realizar ('L' o 'R').
+ */
 struct OperacionEscrituraCinta
 {
     int numeroCinta;
     char simboloEscritura;
     char operacion; // 'L' o 'R'
 };
+/**
+ * Estructura que representa una arista en una máquina de Turing.
+ * Contiene el símbolo de lectura, el estado destino, el número de operaciones de escritura en la cinta
+ * y un puntero a una lista de operaciones de escritura en la cinta.
+ */
 struct Arista
 {
-    char simboloLectura;
-    int estadoDestino;
-    int numeroOperacionesEscrituraCinta;
-    struct OperacionEscrituraCinta *operacionesEscrituraCinta;
+    char simboloLectura;                                       // Símbolo que se debe leer para seguir la arista
+    int estadoDestino;                                         // Estado al que se llega al seguir la arista
+    int numeroOperacionesEscrituraCinta;                       // Número de operaciones de escritura en la cinta
+    struct OperacionEscrituraCinta *operacionesEscrituraCinta; // Puntero a una lista de operaciones de escritura en la cinta
 };
-
+/**
+ * @struct Estado
+ * @brief Estructura que representa un estado en una máquina de Turing.
+ *
+ * Esta estructura contiene información sobre el estado actual, el número de aristas
+ * y un puntero a un arreglo de aristas.
+ */
 struct Estado
 {
     int estado;
@@ -90,26 +121,57 @@ struct Estado
     struct Arista *aristas;
 };
 
+/**
+ * @struct Cinta
+ * @brief Representa una cinta en una máquina de Turing.
+ *
+ * Esta estructura de datos almacena la posición del cabezal de lectura/escritura
+ * y los símbolos presentes en la cinta.
+ *
+ * El cabezal indica la posición actual en la cinta y se utiliza para leer y escribir
+ * símbolos en esa posición.
+ *
+ * Los símbolos se almacenan en un arreglo de caracteres y pueden ser cualquier carácter
+ * válido en el contexto del programa y las máquinas de Turing.
+ *
+ * Esta estructura es utilizada para representar el estado de la cinta en una máquina de Turing
+ * y facilita la manipulación de los símbolos y la posición del cabezal.
+ */
 struct Cinta
 {
     int cabezal;
     char simbolos[INFINITO];
 };
 
+/**
+ * @struct Automata
+ * @brief Estructura de datos que representa un autómata de Turing.
+ *
+ * Un autómata de Turing consta de un conjunto de estados, un alfabeto de entrada,
+ * un alfabeto de la cinta, un estado inicial, un conjunto de estados finales y una
+ * función de transición que define cómo se mueve el autómata en la cinta.
+ *
+ * Esta estructura de datos almacena la información necesaria para representar un autómata
+ * de Turing, incluyendo el número de estados finales, el estado inicial, los estados finales,
+ * el número de elementos del alfabeto de entrada, el alfabeto de entrada, el número de elementos
+ * del alfabeto de la cinta, el alfabeto de la cinta, el número de estados y la función de transición.
+ * También almacena dos cintas, que son utilizadas por el autómata para realizar las operaciones.
+ */
 struct Automata
 {
-    int numeroEstadosFinales;
-    int estadoInicial;      // q0
-    int *estadosFinales;    // F
-    int numElementosSigma;  // Numero de elementos del alfabeto de entrada
-    char *sigma;            // Alfabeto de entrada
-    int numElementosGamma;  // Numero de elementos del alfabeto de la cinta
-    char *gamma;            // Alfabeto de la cintas
-    int numeroEstados;      // |Q|
-    struct Estado *estados; // Delta
-    struct Cinta *cinta1;
-    struct Cinta *cinta2;
+    int numeroEstadosFinales; /**< Número de estados finales */
+    int estadoInicial;        /**< Estado inicial */
+    int *estadosFinales;      /**< Estados finales */
+    int numElementosSigma;    /**< Número de elementos del alfabeto de entrada */
+    char *sigma;              /**< Alfabeto de entrada */
+    int numElementosGamma;    /**< Número de elementos del alfabeto de la cinta */
+    char *gamma;              /**< Alfabeto de la cinta */
+    int numeroEstados;        /**< Número de estados */
+    struct Estado *estados;   /**< Función de transición */
+    struct Cinta *cinta1;     /**< Cinta 1 */
+    struct Cinta *cinta2;     /**< Cinta 2 */
 };
+
 /**
  * Función que imprime los tokens obtenidos.
  *
@@ -174,6 +236,12 @@ int *leerEstadosFinales(int numeroEstadosFinales)
     }
     return estadosFinales;
 }
+/**
+ * Función que lee una cadena y salta una etiqueta.
+ * Luego convierte el token a un entero y lo devuelve como el número de elementos de Sigma.
+ *
+ * @return El número de elementos de Sigma.
+ */
 int leerNumElementosSigma()
 {
     leerCadena();
@@ -181,6 +249,12 @@ int leerNumElementosSigma()
     int numElementosSigma = atoi(TOKEN);
     return numElementosSigma;
 }
+/**
+ * @brief Lee una cadena de caracteres y devuelve un puntero a un arreglo de caracteres.
+ *
+ * @param numElementosSigma El número de elementos en el arreglo sigma.
+ * @return Un puntero a un arreglo de caracteres.
+ */
 char *leerSigma(int numElementosSigma)
 {
     char *sigma = (char *)malloc(sizeof(char) * numElementosSigma);
@@ -193,6 +267,12 @@ char *leerSigma(int numElementosSigma)
     }
     return sigma;
 }
+/**
+ * Función para leer una cadena de caracteres gamma.
+ *
+ * @param numElementosGamma El número de elementos en la cadena gamma.
+ * @return Un puntero a la cadena gamma leída.
+ */
 char *leerGamma(int numElementosGamma)
 {
     char *gamma = (char *)malloc(sizeof(char) * numElementosGamma);
@@ -205,6 +285,11 @@ char *leerGamma(int numElementosGamma)
     }
     return gamma;
 }
+/**
+ * Función que lee una cadena, salta una etiqueta y convierte el token en un número entero.
+ *
+ * @return El número de elementos gamma leídos.
+ */
 int leerNumeroElementosGamma()
 {
     leerCadena();

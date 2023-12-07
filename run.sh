@@ -34,7 +34,8 @@ if [ $? -eq 0 ]; then
     rm ./main
 
     # Imprime un mensaje indicando que el programa se ejecutó correctamente
-    echo "El programa se ejecutó correctamente."
+    echo "Las ADVERTENCIAS de desbordamiento de memoria se pueden ignorar"
+    echo "El programa se ejecutó correctamente"
   else
     # Imprime un mensaje de error si no se pudo ejecutar el programa correctamente
     echo "Error: No se pudo ejecutar el programa correctamente."

@@ -10,7 +10,7 @@
  * Si el valor es false, los logs están desactivados.
  * @attention SOLO PRENDER ESTA VARIABLE CON LOS TESTCASES POR DEFECTO
  */
-bool LOGS_ACTIVADO = true;
+bool LOGS_ACTIVADO = false;
 /**
  * @brief Calculates the minimum value between two integers.
  *

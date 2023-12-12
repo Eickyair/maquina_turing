@@ -1,4 +1,4 @@
-
+[Repositorio GitHub](https://github.com/Eickyair/maquina_turing)
 # Devcontainer
  * Este código utiliza un devcontainer para compilar y ejecutar el programa.
  * Un devcontainer es un entorno de desarrollo aislado y reproducible que se ejecuta en un contenedor de Docker.
@@ -16,7 +16,7 @@
 # Preparar el Entorno
 Si se cuenta con <code>GCC</code> no es necesario realizar esta secion
 ### Pasos para instalar Docker:
-1. Visita el sitio web oficial de Docker (https://www.docker.com/) y descarga la versión adecuada para tu sistema operativo.
+1. Visita el sitio web oficial de [Docker](https://www.docker.com/) y descarga la versión adecuada para tu sistema operativo.
 2. Sigue las instrucciones de instalación proporcionadas por Docker para tu sistema operativo específico.
 3. Una vez instalado Docker, verifica que esté funcionando correctamente ejecutando el comando `docker --version` en la línea de comandos.
 
@@ -50,3 +50,8 @@ Para ejecutar el programa a través se creo el script <code>run.sh</code>:
 <pre>
   ./run.sh
 </pre>
+
+
+## <code>/vscode</code>
+El archivo `tasks.json` en la carpeta `.vscode` se utiliza para configurar tareas en Visual Studio Code. Estas tareas pueden ser cualquier cosa que haga el flujo de trabajo de desarrollo más fácil, como compilar código, ejecutar pruebas, o desplegar a producción.<br>
+La tarea configurada fue generada por la extension [C/C++](https://github.com/Microsoft/vscode-cpptools) para poder inicir un proceso de depuración del código

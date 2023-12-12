@@ -14,7 +14,7 @@
  * Una vez configurado, se puede abrir el proyecto en un contenedor de desarrollo utilizando la opción "Reopen in Container" en VS Code.
  * Esto iniciará el contenedor de Docker con el entorno de desarrollo configurado y se podrá compilar y ejecutar el programa sin problemas.
 # Preparar el Entorno
-
+Si se cuenta con <code>GCC</code> no es necesario realizar esta secion
 ### Pasos para instalar Docker:
 1. Visita el sitio web oficial de Docker (https://www.docker.com/) y descarga la versión adecuada para tu sistema operativo.
 2. Sigue las instrucciones de instalación proporcionadas por Docker para tu sistema operativo específico.
